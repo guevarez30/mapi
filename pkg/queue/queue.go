@@ -25,7 +25,8 @@ func Subscribe(jobs chan<- Order.Order, quit <-chan bool) {
 			default:
 				url := "https://google.com"
 				jobs <- Order.Order{URL: url}
-				time.Sleep(3 * time.Second)
+				// Dont over board the queue
+				time.Sleep(1 * time.Second)
 			}
 		}
 	}()
