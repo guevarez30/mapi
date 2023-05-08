@@ -15,10 +15,18 @@ func sleep(wId int) {
 	time.Sleep(time.Duration(n) * time.Second)
 }
 
-// Keep Calling Subscribe to artifically put orders on queue
-func Subscribe(jobs chan<- Order.Order) {
-	url := "https://google.com"
-	jobs <- Order.Order{URL: url}
-	time.Sleep(3)
-	Subscribe(jobs)
+// Keep Calling Subscribe to read next message
+func Subscribe(jobs chan<- Order.Order, quit <-chan bool) {
+	go func() {
+		for {
+			select {
+			case <-quit:
+				return
+			default:
+				url := "https://google.com"
+				jobs <- Order.Order{URL: url}
+				time.Sleep(3 * time.Second)
+			}
+		}
+	}()
 }
