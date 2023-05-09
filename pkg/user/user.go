@@ -25,3 +25,9 @@ func Insert(db *gorm.DB, user *User) *User {
 	}
 	return user
 }
+
+func UserById(db *gorm.DB, id string) User {
+	var user User
+	db.Model(User{ID: id}).First(&user)
+	return user
+}

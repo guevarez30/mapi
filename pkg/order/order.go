@@ -9,7 +9,7 @@ import (
 
 type Order struct {
 	gorm.Model
-	ID        string
+	ID        string `gorm:"primaryKey"`
 	Task      string
 	Details   string
 	UserId    string
@@ -19,20 +19,21 @@ type Order struct {
 
 func Insert(db *gorm.DB, order *Order) {
 	order.ID = uuid.NewString()
-	err := db.Create(order).Error
-	if err != nil {
-		panic(err)
+	result := db.Create(order)
+	if result.Error != nil {
+		panic(result.Error)
 	}
 }
 
-func OrderById(db *gorm.DB, order_id string) Order {
+func OrderById(db *gorm.DB, order_id string) (Order, error) {
 	var order Order
-	db.Model(Order{ID: order_id}).First(&order)
-	return order
+	result := db.Where("id = ?", order_id).First(&order)
+	return order, result.Error
+
 }
 
-func OrdersByUser(db *gorm.DB) []Order {
+func OrdersByUser(db *gorm.DB, user_id string) ([]Order, error) {
 	var orders []Order
-	db.Model(Order{UserId: "518031f7-bac1-43ba-b5fb-a6045b2e09de"}).Find(&orders)
-	return orders
+	result := db.Model(Order{UserId: user_id}).Find(&orders)
+	return orders, result.Error
 }
