@@ -27,7 +27,7 @@ func Subscribe(jobs chan<- order.Order, quit <-chan bool) {
 				o := order.Order{
 					Task:    "photogrammatry",
 					Details: "banana",
-					UserId:  "518031f7-bac1-43ba-b5fb-a6045b2e09de",
+					UserId:  "b5c6379a-ebf9-4845-841b-e187ece03d4d",
 				}
 
 				jobs <- o

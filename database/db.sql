@@ -9,3 +9,6 @@ create table if not exists image_groups ( id uuid primary key default uuid(), na
 
 /* Images */
 create table if not exists images ( id uuid primary key default uuid(), name varchar(50) NOT NULL, url varchar(50) NOT NULL, small_url varchar(50), image_group_id UUID not null, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, deleted_at DATETIME  NULL, foreign key (image_group_id) references image_groups(id));
+
+/* INSERT INTO table_name (id, first_name, last_name, email, created_at, updated_at) */
+/* VALUES ("b5c6379a-ebf9-4845-841b-e187ece03d4d", "first_name", "last_name", "guevarezfamily30@gmail.com", "2022-07-27 17:57:26", "2022-07-27 17:57:26"); */

@@ -28,5 +28,7 @@ services:
       MYSQL_DATABASE: mapi
       MYSQL_USER: mapi
       MYSQL_PASSWORD: password
+    volumes:
+      - ./data/db:/var/lib/mysql
     ports:
       - "3306:3306"

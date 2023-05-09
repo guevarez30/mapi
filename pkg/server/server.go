@@ -29,7 +29,7 @@ func Run() {
 	app := fiber.New()
 
 	app.Get("/images/groups", func(c *fiber.Ctx) error {
-		user_id := "518031f7-bac1-43ba-b5fb-a6045b2e09de"
+		user_id := "b5c6379a-ebf9-4845-841b-e187ece03d4d"
 		result, err := image.ImageGroupsByUser(db, user_id)
 		err = checkers(err)
 		if err != nil {
@@ -48,7 +48,7 @@ func Run() {
 	})
 
 	app.Get("/orders", func(c *fiber.Ctx) error {
-		user_id := "518031f7-bac1-43ba-b5fb-a6045b2e09de"
+		user_id := "b5c6379a-ebf9-4845-841b-e187ece03d4d"
 		result, err := order.OrdersByUser(db, user_id)
 		err = checkers(err)
 		if err != nil {
