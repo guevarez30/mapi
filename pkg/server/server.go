@@ -39,7 +39,7 @@ func Run() {
 	})
 
 	app.Get("/images/:image_id", func(c *fiber.Ctx) error {
-		result, err := image.ImagesById(db, c.Params("image_id"))
+		result, err := image.ImageById(db, c.Params("image_id"))
 		err = checkers(err)
 		if err != nil {
 			return err

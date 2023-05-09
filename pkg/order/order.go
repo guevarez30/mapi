@@ -17,23 +17,20 @@ type Order struct {
 	UpdatedAt time.Time
 }
 
-func Insert(db *gorm.DB, order *Order) {
+func Insert(db *gorm.DB, order *Order) (*Order, error) {
 	order.ID = uuid.NewString()
-	result := db.Create(order)
-	if result.Error != nil {
-		panic(result.Error)
-	}
+	err := db.Create(order).Error
+	return order, err
 }
 
 func OrderById(db *gorm.DB, order_id string) (Order, error) {
 	var order Order
-	result := db.Where("id = ?", order_id).First(&order)
-	return order, result.Error
-
+	err := db.Where("id = ?", order_id).First(&order).Error
+	return order, err
 }
 
 func OrdersByUser(db *gorm.DB, user_id string) ([]Order, error) {
 	var orders []Order
-	result := db.Model(Order{UserId: user_id}).Find(&orders)
-	return orders, result.Error
+	err := db.Where("user_id = ?", user_id).Find(&orders).Error
+	return orders, err
 }
