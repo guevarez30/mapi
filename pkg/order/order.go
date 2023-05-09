@@ -24,3 +24,15 @@ func Insert(db *gorm.DB, order *Order) {
 		panic(err)
 	}
 }
+
+func OrderById(db *gorm.DB, order_id string) Order {
+	var order Order
+	db.Model(Order{ID: order_id}).First(&order)
+	return order
+}
+
+func OrdersByUser(db *gorm.DB) []Order {
+	var orders []Order
+	db.Model(Order{UserId: "518031f7-bac1-43ba-b5fb-a6045b2e09de"}).Find(&orders)
+	return orders
+}
