@@ -2,18 +2,28 @@ package main
 
 import (
 	"fmt"
-	Order "guevarez30/mapi/pkg/order"
+	"guevarez30/mapi/pkg/database"
+	"guevarez30/mapi/pkg/order"
 	"guevarez30/mapi/pkg/queue"
-	"guevarez30/mapi/pkg/workers"
+	"guevarez30/mapi/pkg/workgroup"
 )
 
 func main() {
-	fmt.Println("Starting consuming")
-	jobs := make(chan Order.Order, 3)
-	quitConsume := make(chan bool, 1)
-	results := make(chan workers.Result)
+	MAX_WORKERS := 3
 
-	wg := workers.New(3, jobs, results)
+	jobs := make(chan order.Order, 3)
+	quitConsume := make(chan bool, 1)
+	results := make(chan workgroup.Result)
+
+	db := database.InitDb()
+
+	wg := workgroup.WorkGroup{
+		MaxWorkers: MAX_WORKERS,
+		Jobs:       jobs,
+		Results:    results,
+		DB:         db,
+	}
+
 	wg.Run()
 	queue.Subscribe(jobs, quitConsume)
 
@@ -23,5 +33,4 @@ func main() {
 			fmt.Println(res)
 		}
 	}
-
 }

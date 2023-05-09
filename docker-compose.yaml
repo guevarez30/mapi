@@ -10,10 +10,14 @@ services:
     volumes:
       - .:/usr/src/app
     command: go run cmd/main.go -b 0.0.0.0
-  db:
+    depends_on:
+      - database
+  database:
     image: mariadb
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: admin 
+      MYSQL_DATABASE: mapi
+      MYSQL_USER: mapi
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"

@@ -2,7 +2,7 @@ package queue
 
 import (
 	"fmt"
-	Order "guevarez30/mapi/pkg/order"
+	"guevarez30/mapi/pkg/order"
 	"math/rand"
 	"time"
 )
@@ -16,15 +16,21 @@ func sleep(wId int) {
 }
 
 // Keep Calling Subscribe to read next message
-func Subscribe(jobs chan<- Order.Order, quit <-chan bool) {
+func Subscribe(jobs chan<- order.Order, quit <-chan bool) {
 	go func() {
 		for {
 			select {
 			case <-quit:
 				return
 			default:
-				url := "https://google.com"
-				jobs <- Order.Order{URL: url}
+
+				o := order.Order{
+					Task:    "photogrammatry",
+					Details: "banana",
+					UserId:  "518031f7-bac1-43ba-b5fb-a6045b2e09de",
+				}
+
+				jobs <- o
 				// Dont over board the queue
 				time.Sleep(1 * time.Second)
 			}
