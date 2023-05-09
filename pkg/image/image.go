@@ -38,7 +38,7 @@ func ImageById(db *gorm.DB, image_id string) (Image, error) {
 	return image, err
 }
 
-func ImagesGroupsByUser(db *gorm.DB, user_id string) ([]ImageGroup, error) {
+func ImageGroupsByUser(db *gorm.DB, user_id string) ([]ImageGroup, error) {
 	var groups []ImageGroup
 	err := db.Where("user_id = ?", user_id).Find(&groups).Error
 	return groups, err

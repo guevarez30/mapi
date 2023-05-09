@@ -30,7 +30,7 @@ func Run() {
 
 	app.Get("/images/groups", func(c *fiber.Ctx) error {
 		user_id := "518031f7-bac1-43ba-b5fb-a6045b2e09de"
-		result, err := image.ImagesGroupsByUser(db, user_id)
+		result, err := image.ImageGroupsByUser(db, user_id)
 		err = checkers(err)
 		if err != nil {
 			return err
