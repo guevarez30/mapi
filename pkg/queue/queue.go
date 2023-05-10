@@ -25,9 +25,9 @@ func Subscribe(jobs chan<- order.Order, quit <-chan bool) {
 			default:
 
 				o := order.Order{
-					Task:    "photogrammatry",
-					Details: "banana",
-					UserId:  "b5c6379a-ebf9-4845-841b-e187ece03d4d",
+					Task:     "photogrammatry",
+					Details:  "banana",
+					UserUUID: "b5c6379a-ebf9-4845-841b-e187ece03d4d",
 				}
 
 				jobs <- o

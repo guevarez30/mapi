@@ -9,7 +9,8 @@ import (
 
 type User struct {
 	gorm.Model
-	ID        string
+	ID        int
+	UUID      string
 	FirstName string
 	LastName  string
 	Email     string
@@ -18,7 +19,7 @@ type User struct {
 }
 
 func Insert(db *gorm.DB, user *User) *User {
-	user.ID = uuid.NewString()
+	user.UUID = uuid.NewString()
 	err := db.Create(user).Error
 	if err != nil {
 		panic(err)
@@ -26,8 +27,8 @@ func Insert(db *gorm.DB, user *User) *User {
 	return user
 }
 
-func UserById(db *gorm.DB, id string) User {
+func UserById(db *gorm.DB, UUID string) User {
 	var user User
-	db.Model(User{ID: id}).First(&user)
+	db.Model(User{UUID: UUID}).First(&user)
 	return user
 }

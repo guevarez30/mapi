@@ -9,16 +9,17 @@ import (
 
 type Order struct {
 	gorm.Model
-	ID        string `gorm:"primaryKey"`
+	ID        int
+	UUID      string
 	Task      string
 	Details   string
-	UserId    string
+	UserUUID  string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
 
 func Insert(db *gorm.DB, order *Order) (*Order, error) {
-	order.ID = uuid.NewString()
+	order.UUID = uuid.NewString()
 	err := db.Create(order).Error
 	return order, err
 }

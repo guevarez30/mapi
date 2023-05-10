@@ -8,20 +8,22 @@ import (
 
 type Image struct {
 	gorm.Model
-	ID           string
-	Name         string
-	Url          string
-	SmallUrl     string
-	ImageGroupId string
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
+	ID             int
+	UUID           string
+	Name           string
+	Url            string
+	SmallUrl       string
+	ImageGroupUUID string
+	CreatedAt      time.Time
+	UpdatedAt      time.Time
 }
 
 type ImageGroup struct {
 	gorm.Model
-	ID        string
+	ID        int
+	UUID      string
 	Name      string
-	UserId    string
+	UserUUID  string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
