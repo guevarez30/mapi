@@ -5,8 +5,10 @@ import (
 	"guevarez30/mapi/pkg/database"
 	"guevarez30/mapi/pkg/image"
 	"guevarez30/mapi/pkg/order"
+	"guevarez30/mapi/pkg/server/auth"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"gorm.io/gorm"
 )
 
@@ -28,7 +30,15 @@ func Run() {
 
 	app := fiber.New()
 
-	app.Get("/images/groups", func(c *fiber.Ctx) error {
+	app.Use(cors.New(cors.Config{
+		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
+	}))
+
+	auth := auth.Initiatlize()
+
+	authProtected := app.Group("/api", auth.Protect)
+
+	authProtected.Get("/images/groups", func(c *fiber.Ctx) error {
 		user_id := "b5c6379a-ebf9-4845-841b-e187ece03d4d"
 		result, err := image.ImageGroupsByUser(db, user_id)
 		err = checkers(err)
@@ -38,7 +48,7 @@ func Run() {
 		return c.JSON(result)
 	})
 
-	app.Get("/images/:image_id", func(c *fiber.Ctx) error {
+	authProtected.Get("/images/:image_id", func(c *fiber.Ctx) error {
 		result, err := image.ImageById(db, c.Params("image_id"))
 		err = checkers(err)
 		if err != nil {
@@ -47,7 +57,7 @@ func Run() {
 		return c.JSON(result)
 	})
 
-	app.Get("/orders", func(c *fiber.Ctx) error {
+	authProtected.Get("/orders", func(c *fiber.Ctx) error {
 		user_id := "b5c6379a-ebf9-4845-841b-e187ece03d4d"
 		result, err := order.OrdersByUser(db, user_id)
 		err = checkers(err)
@@ -57,7 +67,7 @@ func Run() {
 		return c.JSON(result)
 	})
 
-	app.Get("/orders/:order_id", func(c *fiber.Ctx) error {
+	authProtected.Get("/orders/:order_id", func(c *fiber.Ctx) error {
 		result, err := order.OrderById(db, c.Params("order_id"))
 		err = checkers(err)
 		if err != nil {
@@ -66,7 +76,7 @@ func Run() {
 		return c.JSON(result)
 	})
 
-	app.Get("/", func(c *fiber.Ctx) error {
+	authProtected.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, Div Rhino!")
 	})
 

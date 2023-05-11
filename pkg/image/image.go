@@ -30,18 +30,18 @@ type ImageGroup struct {
 
 func ImagesByGroup(db *gorm.DB, group_id string) ([]Image, error) {
 	var images []Image
-	err := db.Where("image_group_id = ?", group_id).Find(&images).Error
+	err := db.Where("image_group_uuid = ?", group_id).Find(&images).Error
 	return images, err
 }
 
 func ImageById(db *gorm.DB, image_id string) (Image, error) {
 	var image Image
-	err := db.Where("id = ?", image_id).First(&image).Error
+	err := db.Where("uuid = ?", image_id).First(&image).Error
 	return image, err
 }
 
 func ImageGroupsByUser(db *gorm.DB, user_id string) ([]ImageGroup, error) {
 	var groups []ImageGroup
-	err := db.Where("user_id = ?", user_id).Find(&groups).Error
+	err := db.Where("user_uuid = ?", user_id).Find(&groups).Error
 	return groups, err
 }

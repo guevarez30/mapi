@@ -26,12 +26,12 @@ func Insert(db *gorm.DB, order *Order) (*Order, error) {
 
 func OrderById(db *gorm.DB, order_id string) (Order, error) {
 	var order Order
-	err := db.Where("id = ?", order_id).First(&order).Error
+	err := db.Where("uuid = ?", order_id).First(&order).Error
 	return order, err
 }
 
 func OrdersByUser(db *gorm.DB, user_id string) ([]Order, error) {
 	var orders []Order
-	err := db.Where("user_id = ?", user_id).Find(&orders).Error
+	err := db.Where("user_uuid = ?", user_id).Find(&orders).Error
 	return orders, err
 }

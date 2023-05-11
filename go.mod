@@ -4,6 +4,8 @@ go 1.19
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
+	github.com/clerkinc/clerk-sdk-go v1.39.0 // indirect
+	github.com/go-jose/go-jose/v3 v3.0.0 // indirect
 	github.com/go-sql-driver/mysql v1.7.1 // indirect
 	github.com/gofiber/fiber/v2 v2.45.0 // indirect
 	github.com/golang/snappy v0.0.1 // indirect

@@ -17,7 +17,8 @@ func InitDb() *gorm.DB {
 func connectDB() *gorm.DB {
 	var err error
 	dsn := os.Getenv("DSN")
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	con := dsn + "&parseTime=true"
+	db, err := gorm.Open(mysql.Open(con), &gorm.Config{})
 
 	if err != nil {
 		panic(err)
